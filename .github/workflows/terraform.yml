@@ -16,3 +16,17 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: hashicorp/terraform-github-actions/validate@v0.4.6
+
+  apply:
+    name: apply
+    needs: [fmt, validate]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: hashicorp/terraform-github-actions/init@v0.4.6
+      - uses: hashicorp/terraform-github-actions/plan@v0.4.6
+        with:
+          args: -out=plan
+      - uses: hashicorp/terraform-github-actions/apply@v0.4.6
+        with:
+          args: plan
