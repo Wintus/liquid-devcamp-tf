@@ -3,7 +3,8 @@ terraform {
 }
 
 provider "aws" {
-  region = "ap-northeast-1"
+  version = "~> 2"
+  region  = "ap-northeast-1"
 }
 
 data "aws_availability_zones" "az" {}
