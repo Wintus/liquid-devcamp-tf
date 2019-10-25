@@ -1,0 +1,23 @@
+name: Terraform Apply
+
+on:
+  release:
+    types: [published]
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  apply:
+    name: apply
+    needs: [fmt, validate]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: hashicorp/terraform-github-actions/init@v0.4.6
+      - uses: hashicorp/terraform-github-actions/plan@v0.4.6
+        with:
+          args: -out=plan
+      - uses: hashicorp/terraform-github-actions/apply@v0.4.6
+        with:
+          args: plan
